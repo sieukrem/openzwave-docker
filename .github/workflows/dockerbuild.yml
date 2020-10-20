@@ -1,8 +1,6 @@
 name: Docker Build
 
 on:
-  schedule:
-    - cron:  '0 0 * * *'
   push:
     branches:
       - master
@@ -25,17 +23,17 @@ jobs:
 
         MATRIX="{\"openzwave\":[\"git\""
 
-        for i in {2..4}
-        do
-          VERSION=$(cat downloads.html | ./pup '#pagecontent > table:nth-child(2) > tbody > tr:nth-child('${i}') > td:nth-child(1) text{}')
-          if [[ $EXISTING_TAGS != *"$VERSION"* ]]
-          then
-            echo ADDING $VERSION TO MATRIX
-            MATRIX="${MATRIX},"${VERSION}""
-          else
-            echo SKIPPING ${VERSION}
-          fi
-        done
+        # for i in {2..4}
+        # do
+        #   VERSION=$(cat downloads.html | ./pup '#pagecontent > table:nth-child(2) > tbody > tr:nth-child('${i}') > td:nth-child(1) text{}')
+        #   if [[ $EXISTING_TAGS != *"$VERSION"* ]]
+        #   then
+        #     echo ADDING $VERSION TO MATRIX
+        #     MATRIX="${MATRIX},"${VERSION}""
+        #   else
+        #     echo SKIPPING ${VERSION}
+        #   fi
+        # done
 
         MATRIX="${MATRIX}],\"dockerfile\":[\"alpine\",\"debian\",\"ubuntu\",\"centos8\"]}"
 
